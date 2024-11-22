@@ -1,31 +1,16 @@
 <?php
-session_start();
+// Database configuration
+$host = 'localhost';  // Database host (e.g., 'localhost' for local development)
+$username = 'root';    // Database username
+$password = '';        // Database password (empty for XAMPP by default)
+$dbname = 'youtube-test';    // The database name
 
-/**
- * Voor de MAC gebruikers;
- */
-$dbhost = "localhost";
-$dbuser = "root";
-$dbpass = "root";
-$dbname = "youtube-test";
-
-/**
- * Voor de Windows gebruikers;
- */
-// $dbhost = "localhost";
-// $dbuser = "root";
-// $dbpass = "";
-// $dbname = "youtube-clone";
-
-$con = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-
-if ($con -> connect_errno) {
-    echo "Failed to connect to MySQL: " . $con -> connect_error;
-    exit();
+// Create a new PDO instance for database connection
+try {
+    $con = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    // Set the PDO error mode to exception
+    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
 }
-
-function prettyDump ( $var ) {
-    echo "<pre>";
-    var_dump($var);
-    echo "</pre>";
-}
+?>
